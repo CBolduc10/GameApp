@@ -1,0 +1,29 @@
+1. Use a noSQL file (or something) to store time / score.
+  - Add text field to enter a name as well.
+
+2. Add a homepage that displays available games
+  - Play button: play the selected game
+  - Scores button: dispaly a list of scores for the selected game
+
+3. Add a game config page before starting the game
+  - number of blocks (difficulty, easy = 10, medium  = 20, hard = 30, along with smaller size)
+  - speed of ball (follow same pattern, 1, 2, 3)
+
+4. special blocks, different point values.
+  - To add challange, set to randomly pick an active block to set as a "special block"
+  - else change this after a block is destroyed + 1 sec or something
+
+5. Power ups:
+  - Gemini: Create a second ball
+    - would require us to be able to manage more than one ball at a time.
+  - DU ball: Ball can blast through blocks without changing direction
+    - MAke this last 3-5 blocks, or 2-3 wall / paddle hits.
+  - Double Points: Every block hit for next 5 seconds is worth double points (inclding special blocks)
+
+6. Modifiers:
+  - Teleporter item: Randomly teleport the ball, and give it "random" velocity
+    - slow ball down to half speed until it hits something, then full speed.
+7. Levels:
+  - 3-5 "levels" where score is kept, and game is auto-reset after you win a level.
+  - perhaps increase difficulty with faster ball or more detrimental effects
+
