@@ -10,7 +10,7 @@ import java.awt.event.KeyListener;
 public class Breaker extends JPanel implements KeyListener, ActionListener {
     private boolean play = true;
     private int score = 0;
-    private int totalBricks = 21;
+    private int totalBricks = 50;
     private Timer timer;
     private int delay = 8;
 
@@ -21,11 +21,13 @@ public class Breaker extends JPanel implements KeyListener, ActionListener {
     private float ballYDir = -4;
 
     private MapGenerator map;
+    private int ballSize = 10;
 
     private String font = "Helvetica";
 
-    public Breaker() {
-        map = new MapGenerator(3, 7);
+    public Breaker(int row, int col) {
+        totalBricks = row * col;
+        map = new MapGenerator(row, col);
         addKeyListener(this);
         setFocusable(true);
         setFocusTraversalKeysEnabled(false);
@@ -47,7 +49,7 @@ public class Breaker extends JPanel implements KeyListener, ActionListener {
         g.fillRect(playerX, 550, 100, 12);
 
         g.setColor(Color.RED);  // ball color
-        g.fillOval((int)ballPosX, (int)ballPosY, 20, 20);
+        g.fillOval((int)ballPosX, (int)ballPosY, ballSize, ballSize);
 
         g.setColor(Color.black);
         g.setFont(new Font(font, Font.BOLD, 25));
@@ -84,7 +86,7 @@ public class Breaker extends JPanel implements KeyListener, ActionListener {
     public void actionPerformed(ActionEvent arg0) {
         timer.start();
         if (play) {
-            Rectangle ballRectangle = new Rectangle((int)ballPosX, (int)ballPosY, 20, 20);
+            Rectangle ballRectangle = new Rectangle((int)ballPosX, (int)ballPosY, ballSize, ballSize);
             if (ballRectangle.intersects(new Rectangle(playerX, 550, 100, 8))) {
                 ballYDir = -ballYDir;
                 if (ballXDir > 0 && ballRectangle.intersects(new Rectangle(playerX, 550, 40, 8))) {
@@ -104,17 +106,16 @@ public class Breaker extends JPanel implements KeyListener, ActionListener {
                         int brickHeight = map.brickHeight;
 
                         Rectangle brickRect = new Rectangle(brickX, brickY, brickWidth, brickHeight);
-                        Rectangle ballRect = new Rectangle((int)ballPosX, (int)ballPosY, 20, 20);
+                        Rectangle ballRect = new Rectangle((int)ballPosX, (int)ballPosY, ballSize, ballSize);
 
                         if (ballRect.intersects(brickRect)) {
                             map.setBrickValue(0, i, j);
                             totalBricks--;
                             score += 1;
 
-                            if (ballPosX + 19 <= brickRect.x || ballPosX >= brickRect.x + brickRect.width) {
+                            if ((ballPosX + ballSize - 4) <= brickRect.x || ballPosX + 4 >= (brickRect.x + brickRect.width)) {
                                 ballXDir = -ballXDir;
-                            }
-                            if ((ballPosY + 19 >= brickRect.y || ballPosY <= brickRect.y + brickRect.height)) {
+                            } else if ((ballPosY + ballSize - 4) >= brickRect.y || ballPosY + 4 <= (brickRect.y + brickRect.height)) {
                                 ballYDir = -ballYDir;
                             }
                         }
@@ -166,8 +167,8 @@ public class Breaker extends JPanel implements KeyListener, ActionListener {
                 ballXDir = -1;
                 ballYDir = -2;
                 score = 0;
-                totalBricks = 21;
-                map = new MapGenerator(3,7);
+                totalBricks = 50;
+                map = new MapGenerator(5,10);
 
                 repaint();
             }

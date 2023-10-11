@@ -4,7 +4,7 @@ import Breaker.Breaker;
 public class Main {
     public static void main(String[] args) {
         JFrame obj = new JFrame();
-        Breaker breaker = new Breaker();
+        Breaker breaker = new Breaker(5, 10);
         obj.setBounds(10,10,700,600);
         obj.setTitle("Breaker");
         obj.setResizable(false);
